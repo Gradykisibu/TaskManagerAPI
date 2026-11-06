@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DATABASE_URL_PROD=${DATABASE_URL_PROD}
+        - JWT_SECRET=${JWT_SECRET}
+
+    image: taskmanager-api:production
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      NODE_ENV: production
+      DATABASE_URL_PROD: ${DATABASE_URL_PROD}
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: ${PORT:-3000}
+
+    restart: unless-stopped
+
+    # volumes:
+    #   # Syncs your local files into the container for live reloading
+    #   - .:/app
+    #   # Prevents local Mac node_modules from overwriting the container's node_modules
+    #   - /app/node_modules
+
