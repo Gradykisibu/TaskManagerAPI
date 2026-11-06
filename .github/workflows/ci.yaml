@@ -48,10 +48,10 @@ jobs:
           EOF
 
       - name: Generate Prisma Client
-        run: dotenv -e .env.test -- npx prisma generate
+        run: npx dotenv-cli -e .env.test -- npx prisma generate
 
       - name: Apply database migrations
-        run: dotenv -e .env.test -- npx prisma migrate deploy
+        run: npx dotenv-cli -e .env.test -- npx prisma migrate deploy
 
       - name: TypeScript check
         run: npx tsc --noEmit
