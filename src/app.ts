@@ -11,7 +11,7 @@ import swaggerSpec from "./config/swagger.js"
 import { requestLogger } from "./middleware/requestLogger.js";
 import { apiVersion } from "./middleware/apiVersion.js";
 import prisma from "./utils/prisma.js";
-import { globalLimiter } from "./middleware/rateLimit.middleware.js";
+// import { globalLimiter } from "./middleware/rateLimit.middleware.js";
 import corsMiddleware from "./middleware/cors.middleware.js";
 
 const app = express();

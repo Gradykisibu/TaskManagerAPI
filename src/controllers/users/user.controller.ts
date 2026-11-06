@@ -1,4 +1,4 @@
-import type { Response, Request, NextFunction} from "express";
+import type { Response, Request, NextFunction } from "express";
 import { registerUser, getUsers } from "../../services/auth/auth.service.js";
 import { loginUser } from "../../services/auth/login.service.js";
 import { rotateRefreshToken, revokeRefreshToken } from "../../services/token/refreshToken.service.js";
@@ -33,7 +33,7 @@ export async function RegisterUserHandler(req: Request, res: Response, next: Nex
     }
 }
 
-export async function GetAllUsersHandler(_req: Request, res: Response, next:NextFunction) {
+export async function GetAllUsersHandler(_req: Request, res: Response, next: NextFunction) {
     try {
         return res.status(200).json({
             success: true,
@@ -45,7 +45,7 @@ export async function GetAllUsersHandler(_req: Request, res: Response, next:Next
     }
 }
 
-export async function loginRegisterUser(req: Request, res: Response, next:NextFunction): Promise<void> {
+export async function loginRegisterUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         const { email, password } = req.body
 
@@ -65,33 +65,32 @@ export async function loginRegisterUser(req: Request, res: Response, next:NextFu
             user: loggedUser.user,
         });
 
-    } catch (error: any) {
-        console.log("Cannot log user", error)
+    } catch (error: unknown) {
+        console.log("Cannot log user", error);
 
-        if (error.message === "User does not exist") {
-            res.status(401).json({
-                success: false,
-                message: "Invalid email, User does not exist please signup"
-            });
+        if (error instanceof Error) {
+            if (error.message === "User does not exist") {
+                res.status(401).json({
+                    success: false,
+                    message: "Invalid email, User does not exist please signup"
+                });
+                return;
+            }
 
-            return
+            if (error.message === "Password is incorrect") {
+                res.status(401).json({
+                    success: false,
+                    message: "Password entered is incorrect"
+                });
+                return;
+            }
         }
 
-
-        if (error.message === "Password is incorrect") {
-            res.status(401).json({
-                success: false,
-                message: "Password entered is incorrect"
-            });
-
-            return
-        }
-
-        next(error)
+        next(error);
     }
 }
 
-export async function logoutUser(req: Request, res: Response, next:NextFunction) {
+export async function logoutUser(req: Request, res: Response, next: NextFunction) {
     try {
         const refreshToken = req.cookies?.refreshToken
 

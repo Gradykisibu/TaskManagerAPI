@@ -1,4 +1,4 @@
-import { Response, Request, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { getAllTasks, createTask, getTask, updateTask, deleteTask } from "../../services/task.service.js";
 import { Prisma } from "../../../generated/prisma/client.js";
 

@@ -145,6 +145,7 @@ export async function authenticateToken(
         // This runs if token verification fails, for example because
         // the token is malformed, has an invalid signature, or has expired.
         // Return 401 Unauthorized to tell the client authentication failed.
+        console.log(error)
         res.status(401).json({
             success: false,
             message: "Invalid or expired authentication token",
